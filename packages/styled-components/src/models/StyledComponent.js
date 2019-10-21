@@ -177,9 +177,8 @@ function useStyledComponentImpl<Config: {}, Instance>(
   propsForElement[
     // handle custom elements which React doesn't properly alias
     isTargetTag && domElements.indexOf(elementToBeCreated) === -1 ? 'class' : 'className'
-  ] = Array.prototype
+  ] = foldedComponentIds
     .concat(
-      foldedComponentIds,
       styledComponentId,
       generatedClassName !== styledComponentId ? generatedClassName : null,
       props.className,
