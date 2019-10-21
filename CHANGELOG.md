@@ -10,6 +10,8 @@ _The format is based on [Keep a Changelog](http://keepachangelog.com/) and this 
 
 - Fix attrs not taking precedence over props when overriding a given prop
 
+- Fix support for styling custom elements (https://github.com/styled-components/styled-components/pull/2819)
+
 ## [v4.3.2] - 2019-06-19
 
 - Fix usage of the "css" prop with the styled-components babel macro (relevant to CRA 2.x users), by [@jamesknelson](http://github.com/jamesknelson) (see [#2633](https://github.com/styled-components/styled-components/issues/2633))
