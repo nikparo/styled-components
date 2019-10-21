@@ -11,6 +11,7 @@ import React, {
 import ComponentStyle from './ComponentStyle';
 import createWarnTooManyClasses from '../utils/createWarnTooManyClasses';
 import determineTheme from '../utils/determineTheme';
+import domElements from '../utils/domElements';
 import escape from '../utils/escape';
 import generateDisplayName from '../utils/generateDisplayName';
 import getComponentName from '../utils/getComponentName';
@@ -173,7 +174,10 @@ function useStyledComponentImpl<Config: {}, Instance>(
     propsForElement.style = { ...attrs.style, ...props.style };
   }
 
-  propsForElement.className = Array.prototype
+  propsForElement[
+    // handle custom elements which React doesn't properly alias
+    isTargetTag && domElements.indexOf(elementToBeCreated) === -1 ? 'class' : 'className'
+  ] = Array.prototype
     .concat(
       foldedComponentIds,
       styledComponentId,
