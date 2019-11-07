@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable no-use-before-define */
 
-import { makeStyleTag, getSheet } from './dom';
+import { makeStyleTag, getSheet, getDocument } from './dom';
 import type { SheetOptions, Tag } from './types';
 
 /** Create a CSSStyleSheet-like tag depending on the environment */
@@ -26,7 +26,7 @@ export class CSSOMTag implements Tag {
     const element = (this.element = makeStyleTag(target));
 
     // Avoid Edge bug where empty style elements don't create sheets
-    element.appendChild(document.createTextNode(''));
+    element.appendChild(getDocument(element).createTextNode(''));
 
     this.sheet = getSheet(element);
     this.length = 0;
@@ -74,7 +74,7 @@ export class TextTag implements Tag {
 
   insertRule(index: number, rule: string): boolean {
     if (index <= this.length && index >= 0) {
-      const node = document.createTextNode(rule);
+      const node = getDocument(this.element).createTextNode(rule);
       const refNode = this.nodes[index];
       this.element.insertBefore(node, refNode || null);
       this.length++;

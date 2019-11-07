@@ -19,8 +19,13 @@ const findLastStyleTag = (target: HTMLElement): void | HTMLStyleElement => {
   return undefined;
 };
 
+export const getDocument = (target?: HTMLElement): Document => {
+  return target ? target.ownerDocument : document;
+};
+
 /** Create a style element inside `target` or <head> after the last */
 export const makeStyleTag = (target?: HTMLElement): HTMLStyleElement => {
+  const document = getDocument(target);
   const head = ((document.head: any): HTMLElement);
   const parent = target || head;
   const style = document.createElement('style');
@@ -46,7 +51,7 @@ export const getSheet = (tag: HTMLStyleElement): CSSStyleSheet => {
   }
 
   // Avoid Firefox quirk where the style element might not have a sheet property
-  const { styleSheets } = document;
+  const { styleSheets } = getDocument(tag);
   for (let i = 0, l = styleSheets.length; i < l; i++) {
     const sheet = styleSheets[i];
     if (sheet.ownerNode === tag) {
